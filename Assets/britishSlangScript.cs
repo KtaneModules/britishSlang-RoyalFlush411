@@ -177,4 +177,17 @@ public class britishSlangScript : MonoBehaviour
             break;
         }
     }
+
+    private string TwitchHelpMessage = @"Use '!{0} press 1' to press a button. The order of the buttons is top, right, bottom, and then left.";
+
+    IEnumerator ProcessTwitchCommand(string command)
+    {
+        var parts = command.ToLowerInvariant().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+        if (parts.Length == 2 && parts[0] == "press" && parts[1].Length == 1 && "1234".Contains(parts[1]))
+        {
+            yield return null;
+            OnButtonPress(buttons[Int32.Parse(parts[1]) - 1]);
+        }
+    }
 }
