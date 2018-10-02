@@ -178,7 +178,7 @@ public class britishSlangScript : MonoBehaviour
         }
     }
 
-    private string TwitchHelpMessage = @"Use '!{0} press 1' to press a button. The order of the buttons is top, right, bottom, and then left.";
+    private string TwitchHelpMessage = @"Use '!{0} press 1' to press a button. Use '!{0} words' to get the words in the chat. The order of the buttons is top, right, bottom, and then left.";
 
     IEnumerator ProcessTwitchCommand(string command)
     {
@@ -188,6 +188,15 @@ public class britishSlangScript : MonoBehaviour
         {
             yield return null;
             OnButtonPress(buttons[Int32.Parse(parts[1]) - 1]);
+        }
+        else if (parts.Length == 1 && parts[0] == "words")
+        {
+            string b1 = buttons[0].text.text == "" ? "BLANK" : buttons[0].text.text;
+            string b2 = buttons[1].text.text == "" ? "BLANK" : buttons[1].text.text;
+            string b3 = buttons[2].text.text == "" ? "BLANK" : buttons[2].text.text;
+            string b4 = buttons[3].text.text == "" ? "BLANK" : buttons[3].text.text;
+            yield return "sendtochat The words are " + b1 + ", " + b2 + ", " + b3 + ", and " + b4;
+            yield break;
         }
     }
 }
